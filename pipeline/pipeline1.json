@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "WranglingDataFlow1",
-				"type": "ExecuteWranglingDataflow",
+				"name": "WranglingDF",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -15,10 +15,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "WranglingDF",
-						"type": "DataFlowReference"
-					}
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],
