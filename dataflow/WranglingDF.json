@@ -1,5 +1,5 @@
 {
-	"name": "WranglingDataFlow1",
+	"name": "WranglingDF",
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {
@@ -23,7 +23,7 @@
 					"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink1"
 				}
 			],
-			"script": "section Section1;\r\nshared DelimitedText1 = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://sapstoracc.dfs.core.windows.net/sapcontainer/TripData - Copy.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = DelimitedText1,\r\n  #\"Replaced value\" = Table.ReplaceValue(Source, \"VTS\", \"Vessel Traffic Services\", Replacer.ReplaceValue, {\"vendor_id\"}),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Replaced value\", each ([store_and_fwd_flag] <> \"N\"))\r\nin\r\n  #\"Filtered rows\";\r\n"
+			"script": "section Section1;\r\nshared DelimitedText1 = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://sapstoracc.dfs.core.windows.net/sapcontainer/TripData - Copy.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = DelimitedText1,\r\n  #\"Replaced value\" = Table.ReplaceValue(Source, \"VTS\", \"Vessel Traffic Services\", Replacer.ReplaceValue, {\"vendor_id\"}),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Replaced value\", each [store_and_fwd_flag] <> \"N\")\r\nin\r\n  #\"Filtered rows\";\r\n"
 		}
 	}
 }
